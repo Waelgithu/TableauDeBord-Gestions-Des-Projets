@@ -19,6 +19,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
     Optional<User> findUserByUsername(String username);
     Optional<User> findUserByEmail(String email);
     Optional<User> findUserByUsernameAndPassword(String username, String password);
+    List<User> findUserByRole(String role);
     @Query("select  a from User a where a.worken= false ")
     Optional<List<User>> findBlockedAccount();
 
@@ -31,6 +32,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
     @Transactional
     @Query("UPDATE User u set u.worken=false where u.id= :idU")
     void updateWorkenToFalse(@Param("idU") Long id);
+
 
 
 }

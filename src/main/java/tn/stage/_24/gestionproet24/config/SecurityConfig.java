@@ -7,57 +7,38 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import tn.stage._24.gestionproet24.entities.Role;
 
 @Configuration
-@EnableWebMvc
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final JwtAuthFilter jwtAuthFilterr;
-    private final AuthenticationProvider authenticationProvide;
-
+    private final JwtAuthFilter jwtAuthFilter;
+    private final AuthenticationProvider authenticationProvider;
 
     @Bean
-    public SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception {
-
-
-
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.
                 csrf( csrf -> csrf.disable())
                 .cors(httpSecurityCorsConfigurer -> {})
                 .securityMatcher("/secure/**")
                 .authorizeHttpRequests(authorize -> {
                     authorize
-                      //    .requestMatchers("/user/**").hasAuthority("USER")
+                            //    .requestMatchers("/user/**").hasAuthority("USER")
                             .requestMatchers("/admin/**").hasRole(Role.ADMIN.toString())
-                         //  .requestMatchers("/**").hasAnyAuthority("ADMIN","USER")
+                            //  .requestMatchers("/**").hasAnyAuthority("ADMIN","USER")
                             .anyRequest().permitAll();
                 })
                 .sessionManagement(session -> {
                     session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
                 })
-                .authenticationProvider(authenticationProvide)
-                .addFilterBefore(jwtAuthFilterr, UsernamePasswordAuthenticationFilter.class);
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
 
-    }
-    @Bean
-    public WebMvcConfigurer corsConfigurer()
-    {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("http://localhost:4200").allowedMethods("GET", "POST","PUT", "DELETE");
-            }
-        };
     }
 
 }

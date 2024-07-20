@@ -73,6 +73,8 @@ public class AccountService implements UserDetailsService {
         return userRepository.findAll();
     }
 
+
+
     public Optional<User> getAccountById(Long id) {
         return userRepository.findById(id);
     }
@@ -182,5 +184,9 @@ public class AccountService implements UserDetailsService {
         return userRepository.save(user);
     }
 
+
+    public List<User> getAdminUsers() {
+        return userRepository.findUserByRole("ADMIN");
+    }
 
 }

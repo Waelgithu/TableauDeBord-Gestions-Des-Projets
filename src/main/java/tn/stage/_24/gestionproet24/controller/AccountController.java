@@ -24,9 +24,11 @@ public class AccountController {
         }
 
         @GetMapping("/GetAllAccounts")
-        public List<User> getAllAccount() {
-                return accountService.getAllAccount();
+        public ResponseEntity<List<User>> getAllUsers() {
+                List<User> users = accountService.getAllAccount();
+                return ResponseEntity.ok(users);
         }
+
 
         @GetMapping("/GetOneAccount/{id}")
         public Optional<User> getAccountById(@PathVariable Long id) {
@@ -82,6 +84,11 @@ public class AccountController {
         @PutMapping("/addUserAndAssignToComment/{commentId}")
         public User addUserAndAssignToComment(@RequestBody User user, @PathVariable("commentId") int commentId){
                 return  accountService.addUserAndAssignToComment(user,commentId);
+        }
+
+        @GetMapping("/admins")
+        public List<User> getAdminUsers() {
+                return accountService.getAdminUsers();
         }
 
 }
