@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import tn.stage._24.gestionproet24.entities.Role;
 import tn.stage._24.gestionproet24.entities.User;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
     Optional<User> findUserByUsername(String username);
     Optional<User> findUserByEmail(String email);
     Optional<User> findUserByUsernameAndPassword(String username, String password);
-    List<User> findUserByRole(String role);
+    List<User> findUserByRole(Role role);
     @Query("select  a from User a where a.worken= false ")
     Optional<List<User>> findBlockedAccount();
 

@@ -12,10 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tn.stage._24.gestionproet24.dao.StadersResponse;
-import tn.stage._24.gestionproet24.entities.Comment;
-import tn.stage._24.gestionproet24.entities.Project;
-import tn.stage._24.gestionproet24.entities.Task;
-import tn.stage._24.gestionproet24.entities.User;
+import tn.stage._24.gestionproet24.entities.*;
 import tn.stage._24.gestionproet24.repository.CommentRepository;
 import tn.stage._24.gestionproet24.repository.ProjectRepository;
 import tn.stage._24.gestionproet24.repository.TaskRepository;
@@ -186,7 +183,7 @@ public class AccountService implements UserDetailsService {
 
 
     public List<User> getAdminUsers() {
-        return userRepository.findUserByRole("ADMIN");
+        return userRepository.findUserByRole(Role.ADMIN);
     }
 
 }

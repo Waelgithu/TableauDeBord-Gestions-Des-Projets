@@ -57,7 +57,9 @@ public class AuthenticationService {
     public AuthenticationResponse authenticate(LoginRequest req) {
         System.out.println(passwordEncoder.encode(req.getPassword()));
         System.out.println(req.getUsername());
+
         System.out.println(req.getEmail());
+
         System.out.println(req.getEmail() +"**********     1       **************" + req.getPassword());
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -91,7 +93,6 @@ public class AuthenticationService {
     public AuthenticationResponse authenticateByEmail(LoginRequest req) {
         System.out.println(passwordEncoder.encode(req.getPassword()));
         System.out.println(req.getEmail());
-
         System.out.println(req.getEmail() +"**********     1       **************" + req.getPassword());
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
