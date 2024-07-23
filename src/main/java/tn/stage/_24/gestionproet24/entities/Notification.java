@@ -1,5 +1,6 @@
 package tn.stage._24.gestionproet24.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,6 +20,7 @@ public class Notification implements Serializable {
     private String libelle;
     private String description;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

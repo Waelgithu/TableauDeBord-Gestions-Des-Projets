@@ -20,15 +20,13 @@ public class AccountController {
         public ResponseEntity<StadersResponse> allowAccountToWork(
                 @PathVariable ("idAcc") Long id
         ){
-            return this.accountService.allowAccountWork(id);
+                return this.accountService.allowAccountWork(id);
         }
 
         @GetMapping("/GetAllAccounts")
-        public ResponseEntity<List<User>> getAllUsers() {
-                List<User> users = accountService.getAllAccount();
-                return ResponseEntity.ok(users);
+        public List<User> getAllAccount() {
+                return accountService.getAllAccount();
         }
-
 
         @GetMapping("/GetOneAccount/{id}")
         public Optional<User> getAccountById(@PathVariable Long id) {
@@ -84,11 +82,6 @@ public class AccountController {
         @PutMapping("/addUserAndAssignToComment/{commentId}")
         public User addUserAndAssignToComment(@RequestBody User user, @PathVariable("commentId") int commentId){
                 return  accountService.addUserAndAssignToComment(user,commentId);
-        }
-
-        @GetMapping("/admins")
-        public List<User> getAdminUsers() {
-                return accountService.getAdminUsers();
         }
 
 }

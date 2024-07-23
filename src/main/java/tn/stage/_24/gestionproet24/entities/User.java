@@ -39,9 +39,11 @@ public class User implements Serializable, UserDetails {
     @Enumerated(EnumType.STRING)
     private Grade grade;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Notification> notifications;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private Set<Comment> comments;

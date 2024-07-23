@@ -1,7 +1,6 @@
 package tn.stage._24.gestionproet24.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,16 +27,15 @@ public class Task implements Serializable {
     private int priority;
 
     @ManyToMany(mappedBy = "tasks", cascade = CascadeType.ALL)
-    @JsonManagedReference
     private Set<User> users;
 
 
+    @JsonIgnore
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
     private Set<Comment> comments;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "project_Ref")
-    /*@JsonBackReference*/
     private Project project;
 }

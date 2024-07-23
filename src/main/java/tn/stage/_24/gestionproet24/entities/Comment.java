@@ -1,6 +1,6 @@
 package tn.stage._24.gestionproet24.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,14 +23,14 @@ public class Comment implements Serializable {
     private String authorType;
     private String commentableType;
 
+    @JsonIgnore
     @ManyToOne
     @JsonManagedReference
     @JoinColumn(name = "user_id")
-    /*@JsonBackReference*/
     private User author;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "task_id")
-    /*@JsonBackReference*/
     private Task task;
 }

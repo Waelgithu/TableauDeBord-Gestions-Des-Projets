@@ -65,7 +65,7 @@ public class CommentController {
         return  commentService.addCommentAndAssignToUserAndTask(comment,userId,taskId);
     }*/
 
-    @PostMapping("/AddTest")
+    @PostMapping("/Add")
     public ResponseEntity<?> addComment(@RequestBody Map<String, Object> payload) {
         try {
             // Check if comment data is present
