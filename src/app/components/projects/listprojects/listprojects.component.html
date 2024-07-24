@@ -1,0 +1,33 @@
+<div>
+    <h2>Projects</h2>
+    <ul>
+      <li *ngFor="let project of projects">
+        {{ project.nom }} - {{ project.description }}
+        <button (click)="viewProject(project.id)">View</button>
+        <button (click)="deleteProject(project.id)">Delete</button>
+      </li>
+    </ul>
+  
+    <div *ngIf="selectedProject">
+      <h3>Project Details</h3>
+      <p><strong>Name:</strong> {{ selectedProject.nom }}</p>
+      <p><strong>Description:</strong> {{ selectedProject.description }}</p>
+      <!-- Add more details as needed -->
+    </div>
+  
+    <div>
+      <h3>Add New Project</h3>
+      <form (ngSubmit)="addProject(newProject)">
+        <label for="nom">Name:</label>
+        <input id="nom" [(ngModel)]="newProject.nom" name="nom" required />
+        
+        <label for="description">Description:</label>
+        <input id="description" [(ngModel)]="newProject.description" name="description" required />
+        
+        <!-- Add more fields as needed -->
+        
+        <button type="submit">Add Project</button>
+      </form>
+    </div>
+  </div>
+  

@@ -1,0 +1,10 @@
+<div class="container">
+    <h2>Waiting for Admin Acceptance</h2>
+    <p>Contact one of the following admins to get accepted:</p>
+    <ul>
+      <li *ngFor="let admin of adminUsers">
+        {{ admin.username }} - {{ admin.email }}
+      </li>
+    </ul>
+  </div>
+  
