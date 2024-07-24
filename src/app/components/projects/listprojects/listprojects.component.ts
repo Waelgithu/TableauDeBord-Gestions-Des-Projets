@@ -21,6 +21,7 @@ export class ProjectComponent implements OnInit {
     type: '',
     budget: 0
   };
+  /*  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  */
 
   constructor(private projectService: ListprojectsService) { }
 
