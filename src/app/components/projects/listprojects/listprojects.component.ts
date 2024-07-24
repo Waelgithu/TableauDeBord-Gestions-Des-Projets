@@ -10,6 +10,7 @@ import { ListprojectsService } from 'src/app/services/projects/listprojects.serv
 export class ProjectComponent implements OnInit {
   projects: Project[] = [];
   selectedProject: Project | null = null;
+  newProject: Project = { id: 0, nom: '', description: '', status: '', startDate: new Date(), endDate: new Date(), priority: 0 };
 
   constructor(private projectService: ListprojectsService) { }
 
