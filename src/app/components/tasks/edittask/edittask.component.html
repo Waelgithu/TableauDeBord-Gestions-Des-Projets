@@ -1,0 +1,33 @@
+<div>
+  <h2>Edit Task</h2>
+  <form (ngSubmit)="updateTask()">
+    <label for="title">Title:</label>
+    <input id="title" [(ngModel)]="task.title" name="title" required />
+
+    <label for="description">Description:</label>
+    <input id="description" [(ngModel)]="task.description" name="description" required />
+
+    <br><br>
+
+    <label for="status">Status:</label>
+    <select id="status" [(ngModel)]="task.status" name="status" required>
+      <option *ngFor="let status of taskStatusOptions" [value]="status">{{ status }}</option>
+    </select>
+
+    <label for="startDate">Start Date:</label>
+    <input id="startDate" type="date" [ngModel]="task.startDate | date:'yyyy-MM-dd'" (ngModelChange)="task.startDate = $event" name="startDate" required />
+
+    <br><br>
+
+    <label for="endDate">End Date:</label>
+    <input id="endDate" type="date" [ngModel]="task.endDate | date:'yyyy-MM-dd'" (ngModelChange)="task.endDate = $event" name="endDate" required />
+
+    <label for="priority">Priority:</label>
+    <input id="priority" type="number" [(ngModel)]="task.priority" name="priority" required />
+
+    <br><br>
+
+    <button type="submit">Save</button>
+    <button type="button" (click)="goBack()">Cancel</button>
+  </form>
+</div>

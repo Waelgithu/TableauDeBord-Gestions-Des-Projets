@@ -23,6 +23,7 @@ export interface Project {
     users?: User[];
     comments?: Comment[];
     project?: Project;
+    progress?: number;
   }
   
   export interface User {
@@ -30,7 +31,7 @@ export interface Project {
     username: string;
     email: string;
     grade: string;
-    role: string;
+    role: Role;
     worken: boolean;
   }
   
@@ -51,5 +52,14 @@ export interface Project {
     LIVRE = 'LIVRE',
     NON_DEMARRE = 'NON_DEMARRE',
     EN_ATTENTE = 'EN_ATTENTE'
+  }
+  export enum Role {
+    ADMIN = 'ADMIN',
+    PROJECT_MANAGER = 'PROJECT_MANAGER',
+    PERSONNEL_ADMINISTRATIF = 'PERSONNEL_ADMINISTRATIF',
+    TEAM_LEADER = 'LTEAM_LEADER',
+    DEVELOPER = 'DEVELOPER',
+    TESTER = 'TESTER',
+    DESIGNER = 'DESIGNER'
   }
   

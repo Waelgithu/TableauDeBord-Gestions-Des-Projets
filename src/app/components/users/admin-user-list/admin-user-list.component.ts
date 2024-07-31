@@ -1,7 +1,7 @@
 // src/app/components/admin-user-list/admin-user-list.component.ts
 import { Component, OnInit } from '@angular/core';
 import { AdminUserListService } from '../../../services/users/AdminUserList/admin-user-list.service';
-import { User } from '../../../models/user.model';
+import { User } from '../../../models/project.model';
 
 @Component({
   selector: 'app-admin-user-list',

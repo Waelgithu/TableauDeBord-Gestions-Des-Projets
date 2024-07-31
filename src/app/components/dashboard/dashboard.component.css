@@ -1,0 +1,42 @@
+.dashboard-container {
+  display: flex;
+}
+
+.sidebar {
+  width: 20%;
+  padding: 10px;
+  background-color: #f8f9fa;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.main-content {
+  width: 80%;
+  padding: 20px;
+}
+
+.charts, .project-details, .progress-stats {
+  margin-bottom: 20px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.table th {
+  background-color: #f2f2f2;
+}

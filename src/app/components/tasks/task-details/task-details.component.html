@@ -1,0 +1,22 @@
+<div *ngIf="task">
+  <h2>Task Details</h2>
+  <p><strong>Title:</strong> {{ task.title }}</p>
+  <p><strong>Description:</strong> {{ task.description }}</p>
+  <p><strong>Status:</strong> {{ task.status }}</p>
+  <p><strong>Start Date:</strong> {{ task.startDate | date }}</p>
+  <p><strong>End Date:</strong> {{ task.endDate | date }}</p>
+  <p><strong>Priority:</strong> {{ task.priority }}</p>
+
+  <!-- User Assignment -->
+  <div>
+    <label for="user">Assign User:</label>
+    <select id="user" [(ngModel)]="selectedUserId" name="user">
+      <option *ngFor="let user of filteredUsers" [value]="user.id">
+        {{ user.username }} ({{ user.role }})
+      </option>
+    </select>
+    <button (click)="assignUserToTask()">Assign User</button>
+  </div>
+
+  <button (click)="goBack()">Back</button>
+</div>

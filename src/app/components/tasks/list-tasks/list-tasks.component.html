@@ -1,0 +1,89 @@
+<div class="task-form">
+  <!-- Task Title -->
+  <div>
+    <label for="task-title">Tâche</label>
+    <input id="task-title" [(ngModel)]="newTask.title" placeholder="Tâche" name="title" required>
+  </div>
+  
+  <!-- Task Priority -->
+  <div>
+    <label for="task-priority">Priorité</label>
+    <input id="task-priority" type="number" [(ngModel)]="newTask.priority" placeholder="Priorité" name="priority" required>
+  </div>
+  
+  <!-- Task Description -->
+  <div>
+    <label for="task-description">Description</label>
+    <textarea id="task-description" [(ngModel)]="newTask.description" placeholder="Description" name="description"></textarea>
+  </div>
+  
+  <!-- Task Status -->
+  <div>
+    <label>Status</label>
+    <div *ngFor="let status of taskStatusOptions">
+      <input type="radio" [(ngModel)]="newTask.status" [value]="status" name="status"> {{status}}
+    </div>
+  </div>
+  
+  <!-- Task Start Date -->
+  <div>
+    <label for="task-start-date">Date de lancement</label>
+    <input 
+      id="task-start-date" 
+      type="date" 
+      [value]="formatDate(newTask.startDate)" 
+      (change)="onStartDateChange($event)" 
+      name="startDate" 
+      required
+    >
+  </div>
+  
+  <!-- Task End Date -->
+  <div>
+    <label for="task-end-date">Date de livraison</label>
+    <input 
+      id="task-end-date" 
+      type="date" 
+      [value]="formatDate(newTask.endDate)" 
+      (change)="onEndDateChange($event)" 
+      name="endDate" 
+      required
+    >
+  </div>
+  
+  <!-- Select Person -->
+  <div>
+    <label for="task-person">Personne</label>
+    <select id="task-person" [(ngModel)]="selectedPerson" name="person">
+      <option *ngFor="let person of filteredUsers" [ngValue]="person">
+        {{ person.username }} ({{ person.role }})
+      </option>
+    </select>
+  </div>
+  
+  <button (click)="addTask(newTask)">Ajouter tâche</button>
+</div>
+
+<!-- Task List -->
+<div class="task-list">
+  <table>
+    <thead>
+      <tr>
+        <th>Titre</th>
+        <th>Description</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of tasks">
+        <td>{{ task.title }}</td>
+        <td>{{ task.description }}</td>
+        <td>
+          <button (click)="viewTask(task.id)">Détails</button>
+          <button (click)="editTask(task.id)">Modifier</button>
+          <button (click)="deleteTask(task.id)">Supprimer</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

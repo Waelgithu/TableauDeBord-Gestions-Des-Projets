@@ -1,0 +1,24 @@
+<div *ngIf="project">
+  <h2>Project Details</h2>
+  <p><strong>Name:</strong> {{ project.nom }}</p>
+  <p><strong>Description:</strong> {{ project.description }}</p>
+  <p><strong>Status:</strong> {{ project.status }}</p>
+  <p><strong>Start Date:</strong> {{ project.startDate | date }}</p>
+  <p><strong>End Date:</strong> {{ project.endDate | date }}</p>
+  <p><strong>Priority:</strong> {{ project.priority }}</p>
+  <p><strong>Type:</strong> {{ project.type }}</p>
+  <p><strong>Budget:</strong> {{ project.budget | currency }}</p>
+
+  <!-- User Assignment -->
+  <div>
+    <label for="userSelect">Assign User:</label>
+    <select id="userSelect" [(ngModel)]="selectedUserId" name="user">
+      <option *ngFor="let user of filteredUsers" [value]="user.id">
+        {{ user.username }} ({{ user.role }})
+      </option>
+    </select>
+    <button (click)="assignUserToProject()">Assign User</button>
+  </div>
+
+  <button (click)="goBack()">Back</button>
+</div>

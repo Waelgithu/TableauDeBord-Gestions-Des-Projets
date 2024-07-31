@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User } from '../../../models/user.model';
+import { User } from '../../../models/project.model';
 
 @Injectable({
   providedIn: 'root'
@@ -27,4 +27,13 @@ export class AdminUserListService {
   getAdminUsers(): Observable<User[]> {
     return this.http.get<User[]>(`${this.baseUrl}admins`);
   }
+
+  getNonAdminUsers(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.baseUrl}GetNonAdmins`);
+  }
+
+  getUsersByProject(projectId: number): Observable<User[]> {
+    return this.http.get<User[]>(`${this.baseUrl}project/${projectId}`);
+  }
+  
 }

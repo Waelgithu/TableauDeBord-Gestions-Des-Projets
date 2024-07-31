@@ -1,14 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Project } from 'src/app/models/project.model';
+import { Project, User, Task } from 'src/app/models/project.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ListprojectsService {
 
-  private apiUrl = '/admin/api/projects';
+  private apiUrl = 'http://localhost:8091/admin/api/projects';
 
   constructor(private http: HttpClient) { }
 
@@ -30,5 +30,14 @@ export class ListprojectsService {
 
   deleteProject(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/DeleteProject/${id}`);
+  }
+
+  assignUserToProject(userId: number, projectId: number): Observable<User> {
+    const url = `http://localhost:8091/admin/AffectUserToProject/${userId}/assign/${projectId}`;
+    return this.http.post<User>(url, {});
+  }
+
+  getTasksByProject(projectId: number): Observable<Task[]> {
+    return this.http.get<Task[]>(`${this.apiUrl}/GetTasksByProject/${projectId}`);
   }
 }

@@ -1,0 +1,33 @@
+<div *ngIf="project">
+    <h2>Edit Project</h2>
+    <form (ngSubmit)="saveChanges()">
+      <label for="nom">Name:</label>
+      <input id="nom" [(ngModel)]="project.nom" name="nom" required />
+      
+      <label for="description">Description:</label>
+      <input id="description" [(ngModel)]="project.description" name="description" required />
+      
+      <label for="status">Status:</label>
+      <select id="status" [(ngModel)]="project.status" name="status" required>
+        <option *ngFor="let status of statusOptions" [value]="status">{{ status }}</option>
+      </select>
+      
+      <label for="startDate">Start Date:</label>
+      <input id="startDate" type="date" [(ngModel)]="project.startDate" name="startDate" required />
+      
+      <label for="endDate">End Date:</label>
+      <input id="endDate" type="date" [(ngModel)]="project.endDate" name="endDate" required />
+      
+      <label for="priority">Priority:</label>
+      <input id="priority" type="number" [(ngModel)]="project.priority" name="priority" required />
+      
+      <label for="type">Type:</label>
+      <input id="type" [(ngModel)]="project.type" name="type" required />
+      
+      <label for="budget">Budget:</label>
+      <input id="budget" type="number" [(ngModel)]="project.budget" name="budget" required />
+      
+      <button type="submit">Save Changes</button>
+    </form>
+  </div>
+  
