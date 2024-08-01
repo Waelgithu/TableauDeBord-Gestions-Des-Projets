@@ -1,8 +1,6 @@
-<!-- src/app/components/dashboard/dashboard.component.html -->
-
 <div class="dashboard-container">
   <div class="sidebar">
-    <h3>Projet :</h3>
+    <h3>Projets :</h3>
     <ul>
       <li *ngFor="let project of projects" (click)="selectProject(project)">
         {{ project.nom }}
@@ -10,6 +8,21 @@
     </ul>
   </div>
   <div class="main-content">
+    <div class="total-budget">
+      <h4>Budget Total de tous les projets</h4>
+      <p>{{ totalBudget }}</p>
+    </div>
+    <div class="status-pie-chart">
+      <h4>Répartition des Statuts des Projets</h4>
+      <div class="pie-chart">
+        <div class="pie-segment" style="--offset: 0; --size: {{ statusCounts['EN_COURS'] || 0 }};"></div>
+        <div class="pie-segment" style="--offset: calc(100% * ({{ statusCounts['EN_COURS'] || 0 }} / 100)); --size: {{ statusCounts['ANNULE_ET_CLOTURE'] || 0 }};"></div>
+        <div class="pie-segment" style="--offset: calc(100% * ({{ statusCounts['EN_COURS'] || 0 }} + {{ statusCounts['ANNULE_ET_CLOTURE'] || 0 }} / 100)); --size: {{ statusCounts['LIVRE_ET_CLOTURE'] || 0 }};"></div>
+        <div class="pie-segment" style="--offset: calc(100% * ({{ statusCounts['EN_COURS'] || 0 }} + {{ statusCounts['ANNULE_ET_CLOTURE'] || 0 }} + {{ statusCounts['LIVRE_ET_CLOTURE'] || 0 }} / 100)); --size: {{ statusCounts['LIVRE'] || 0 }};"></div>
+        <div class="pie-segment" style="--offset: calc(100% * ({{ statusCounts['EN_COURS'] || 0 }} + {{ statusCounts['ANNULE_ET_CLOTURE'] || 0 }} + {{ statusCounts['LIVRE_ET_CLOTURE'] || 0 }} + {{ statusCounts['LIVRE'] || 0 }} / 100)); --size: {{ statusCounts['NON_DEMARRE'] || 0 }};"></div>
+        <div class="pie-segment" style="--offset: calc(100% * ({{ statusCounts['EN_COURS'] || 0 }} + {{ statusCounts['ANNULE_ET_CLOTURE'] || 0 }} + {{ statusCounts['LIVRE_ET_CLOTURE'] || 0 }} + {{ statusCounts['LIVRE'] || 0 }} + {{ statusCounts['NON_DEMARRE'] || 0 }} / 100)); --size: {{ statusCounts['EN_ATTENTE'] || 0 }};"></div>
+      </div>
+    </div>
     <div *ngIf="selectedProject">
       <h2>{{ selectedProject.nom }}</h2>
       <p>{{ selectedProject.description }}</p>
@@ -17,20 +30,17 @@
         <div class="chart">
           <h4>Budget Total</h4>
           <p>{{ selectedProject.budget }}</p>
-          <!-- Add chart code for Budget Total -->
         </div>
         <div class="chart">
           <h4>Budget Consommé</h4>
-          <!-- Add chart code for Budget Consommé -->
         </div>
         <div class="chart">
           <h4>Task Completion</h4>
-          <!-- Add chart code for Task Completion -->
         </div>
       </div>
       <div class="project-details">
         <h4>Equipes</h4>
-        <table>
+        <table class="table">
           <thead>
             <tr>
               <th>#</th>
@@ -57,7 +67,7 @@
       </div>
       <div class="project-tasks">
         <h4>Tasks</h4>
-        <table>
+        <table class="table">
           <thead>
             <tr>
               <th>#</th>
@@ -83,8 +93,7 @@
         </table>
       </div>
       <div class="progress-stats">
-        <h4>Aperçu des status des taches</h4>
-        <!-- Add chart code for task status overview -->
+        <h4>Aperçu des statuts des tâches</h4>
       </div>
     </div>
   </div>

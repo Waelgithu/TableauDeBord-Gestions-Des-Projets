@@ -4,6 +4,8 @@ import { ReactiveFormsModule } from '@angular/forms'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
+import { NgChartsModule } from 'ng2-charts';
+//import { NgApexchartsModule } from 'ng-apexcharts';
 import { LoginComponent } from './components/users/login/login.component';
 import { AuthService } from './services/users/loginS/auth.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -40,6 +42,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
+    NgChartsModule,
+    //NgApexchartsModule,
     AppRoutingModule
   ],
   providers: [AuthService],
