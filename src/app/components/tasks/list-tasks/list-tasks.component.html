@@ -50,36 +50,53 @@
       required
     >
   </div>
-  
-  <!-- Select Person -->
+
+  <!-- Select User -->
   <div>
-    <label for="task-person">Personne</label>
-    <select id="task-person" [(ngModel)]="selectedPerson" name="person">
-      <option *ngFor="let person of filteredUsers" [ngValue]="person">
-        {{ person.username }} ({{ person.role }})
+    <label for="user-select">Sélectionner Utilisateur</label>
+    <select id="user-select" [(ngModel)]="selectedPerson" name="user">
+      <option *ngFor="let user of filteredUsers" [ngValue]="user">
+        {{ user.username }}
       </option>
     </select>
   </div>
   
-  <button (click)="addTask(newTask)">Ajouter tâche</button>
+  <!-- Select Project -->
+  <div>
+    <label for="project-select">Sélectionner Projet</label>
+    <select id="project-select" [(ngModel)]="selectedProjectId" name="project">
+      <option *ngFor="let project of projects" [value]="project.id">
+        {{ project.nom }}
+      </option>
+    </select>
+  </div>
+  
+  <!-- Add Task Button -->
+  <button (click)="addTask(newTask)">Ajouter Tâche</button>
 </div>
 
 <!-- Task List -->
 <div class="task-list">
+  <h2>Liste des tâches</h2>
   <table>
     <thead>
       <tr>
-        <th>Titre</th>
+        <th>Tâche</th>
         <th>Description</th>
-        <th>Actions</th>
+        <th>Status</th>
+        <th>Priorité</th>
+        
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let task of tasks">
         <td>{{ task.title }}</td>
         <td>{{ task.description }}</td>
+        <td>{{ task.status }}</td>
+        <td>{{ task.priority }}</td>
+        
         <td>
-          <button (click)="viewTask(task.id)">Détails</button>
+          <button (click)="viewTask(task.id)">Voir</button>
           <button (click)="editTask(task.id)">Modifier</button>
           <button (click)="deleteTask(task.id)">Supprimer</button>
         </td>

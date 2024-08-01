@@ -37,4 +37,9 @@ export class TasksService {
     const url = `http://localhost:8091/admin/AffectUserToTasks/${userId}/assign/${taskId}`;
     return this.http.post<User>(url, {});
   }
+
+  assignTaskToProject(taskId: number, projectId: number): Observable<Task> {
+    return this.http.put<Task>(`${this.baseUrl}/assignTaskToProject/${taskId}/${projectId}`, {});
+  }
+  
 }

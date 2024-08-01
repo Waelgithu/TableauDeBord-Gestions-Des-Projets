@@ -3,6 +3,8 @@ import { Task, Status, User } from 'src/app/models/project.model';
 import { Router } from '@angular/router';
 import { TasksService } from 'src/app/services/tasks/tasks.service';
 import { AdminUserListService } from 'src/app/services/users/AdminUserList/admin-user-list.service';
+import { ListprojectsService } from 'src/app/services/projects/Add+List/listprojects.service';
+
 
 @Component({
   selector: 'app-list-tasks',
@@ -12,10 +14,12 @@ import { AdminUserListService } from 'src/app/services/users/AdminUserList/admin
 export class ListTasksComponent implements OnInit {
   tasks: Task[] = [];
   users: User[] = [];
+  projects: any[] = []; // Define the project type if possible
   filteredUsers: User[] = [];
   selectedTask: Task | null = null;
   selectedUserId: number | null = null;
   selectedPerson: User | null = null; // Ensure this is of type User or null
+  selectedProjectId: number | null = null;
 
   newTask: Task = {
     id: 0,
@@ -32,17 +36,32 @@ export class ListTasksComponent implements OnInit {
   constructor(
     private taskService: TasksService,
     private userService: AdminUserListService,
+    private projectService: ListprojectsService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     this.loadTasks();
     this.loadUsers();
+    this.loadProjects();
   }
 
   loadTasks(): void {
     this.taskService.getAllTasks().subscribe((data: Task[]) => {
       this.tasks = data; // No transformation needed here
+    });
+  }
+
+  loadUsers(): void {
+    this.userService.getAllAccounts().subscribe((data: User[]) => {
+      this.users = data;
+      this.filteredUsers = this.users.filter(user => user.role !== 'ADMIN');
+    });
+  }
+
+  loadProjects(): void {
+    this.projectService.getAllProjects().subscribe((data: any[]) => {
+      this.projects = data; // No transformation needed here
     });
   }
 
@@ -52,19 +71,13 @@ export class ListTasksComponent implements OnInit {
     const day = ('0' + date.getDate()).slice(-2);
     return `${year}-${month}-${day}`;
   }
+
   onStartDateChange(event: any): void {
     this.newTask.startDate = new Date(event.target.value);
   }
   
   onEndDateChange(event: any): void {
     this.newTask.endDate = new Date(event.target.value);
-  }
-
-  loadUsers(): void {
-    this.userService.getAllAccounts().subscribe((data: User[]) => {
-      this.users = data;
-      this.filteredUsers = this.users.filter(user => user.role !== 'ADMIN');
-    });
   }
 
   viewTask(id: number): void {
@@ -81,13 +94,22 @@ export class ListTasksComponent implements OnInit {
     } else {
       newTask.users = []; // Ensure the users property is an empty array if no person is selected
     }
-    this.taskService.createTask(newTask).subscribe(() => {
-      this.loadTasks();
-      this.resetNewTask();
-    }, error => {
-      console.error('Error adding task:', error);
-      alert('Failed to add task.');
-    });
+    if (this.selectedProjectId) {
+      this.taskService.assignTaskToProject(newTask.id, this.selectedProjectId).subscribe(() => {
+        this.taskService.createTask(newTask).subscribe(() => {
+          this.loadTasks();
+          this.resetNewTask();
+        }, error => {
+          console.error('Error adding task:', error);
+          alert('Failed to add task.');
+        });
+      }, error => {
+        console.error('Error assigning task to project:', error);
+        alert('Failed to assign task to project.');
+      });
+    } else {
+      alert('Please select a project.');
+    }
   }
 
   resetNewTask(): void {
@@ -101,6 +123,7 @@ export class ListTasksComponent implements OnInit {
       priority: 0
     };
     this.selectedPerson = null; // Reset selected person
+    this.selectedProjectId = null; // Reset selected project
   }
 
   deleteTask(id: number): void {
