@@ -15,6 +15,7 @@ import { EdittaskComponent } from './components/tasks/edittask/edittask.componen
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AdminAuthGuard } from './gurds/adminAuth.guard';
 import { doesTheUserLoggedIn } from 'src/utils/doesTheUserLoggedIn';
+import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 
 
 const routes: Routes = [
@@ -48,29 +49,33 @@ const routes: Routes = [
     component: ProjectsComponent
   },
   {
-    path: 'project-details/:id', 
-    component: ProjectDetailsComponent 
+    path: 'project-details/:id',
+    component: ProjectDetailsComponent
   },
-  { 
-    path: 'edit-project/:id', 
-    component: EditProjectComponent 
+  {
+    path: 'edit-project/:id',
+    component: EditProjectComponent
   },
   {
     path: 'tasklist',
     component: ListTasksComponent
   },
-  { 
-    path: 'tasks/:id', 
-    component: TaskDetailsComponent 
+  {
+    path: 'tasks/:id',
+    component: TaskDetailsComponent
   },
 
-  { 
-    path: 'edit-task/:id', 
-    component: EdittaskComponent 
+  {
+    path: 'edit-task/:id',
+    component: EdittaskComponent
   },
   {
     path: 'dashboard',
     component: DashboardComponent
+  },
+  {
+    path: 'pieChart',
+    component: PieChartComponent
   },
   {
     path: '', redirectTo: '/login',

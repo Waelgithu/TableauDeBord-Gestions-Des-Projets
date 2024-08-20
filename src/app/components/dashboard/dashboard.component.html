@@ -7,46 +7,45 @@
       </li>
     </ul>
   </div>
+
   <div class="main-content">
+    <div>
+      <iframe title="stage24" width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=30d01d3c-0545-4d43-abb4-9ad3eaf27552&autoAuth=true&ctid=604f1a96-cbe8-43f8-abbf-f8eaf5d85730" frameborder="0" allowFullScreen="true"></iframe>
+    </div>
+
     <div class="total-budget">
       <h4>Budget Total de tous les projets</h4>
-      <p>{{ totalBudget }}</p>
+      <p>{{ totalBudget | currency }}</p>
     </div>
-    <div class="status-pie-chart">
-      <h4>Répartition des Statuts des Projets</h4>
-      <div class="pie-chart">
-        <div class="pie-segment" style="--offset: 0; --size: {{ statusCounts['EN_COURS'] || 0 }};"></div>
-        <div class="pie-segment" style="--offset: calc(100% * ({{ statusCounts['EN_COURS'] || 0 }} / 100)); --size: {{ statusCounts['ANNULE_ET_CLOTURE'] || 0 }};"></div>
-        <div class="pie-segment" style="--offset: calc(100% * ({{ statusCounts['EN_COURS'] || 0 }} + {{ statusCounts['ANNULE_ET_CLOTURE'] || 0 }} / 100)); --size: {{ statusCounts['LIVRE_ET_CLOTURE'] || 0 }};"></div>
-        <div class="pie-segment" style="--offset: calc(100% * ({{ statusCounts['EN_COURS'] || 0 }} + {{ statusCounts['ANNULE_ET_CLOTURE'] || 0 }} + {{ statusCounts['LIVRE_ET_CLOTURE'] || 0 }} / 100)); --size: {{ statusCounts['LIVRE'] || 0 }};"></div>
-        <div class="pie-segment" style="--offset: calc(100% * ({{ statusCounts['EN_COURS'] || 0 }} + {{ statusCounts['ANNULE_ET_CLOTURE'] || 0 }} + {{ statusCounts['LIVRE_ET_CLOTURE'] || 0 }} + {{ statusCounts['LIVRE'] || 0 }} / 100)); --size: {{ statusCounts['NON_DEMARRE'] || 0 }};"></div>
-        <div class="pie-segment" style="--offset: calc(100% * ({{ statusCounts['EN_COURS'] || 0 }} + {{ statusCounts['ANNULE_ET_CLOTURE'] || 0 }} + {{ statusCounts['LIVRE_ET_CLOTURE'] || 0 }} + {{ statusCounts['LIVRE'] || 0 }} + {{ statusCounts['NON_DEMARRE'] || 0 }} / 100)); --size: {{ statusCounts['EN_ATTENTE'] || 0 }};"></div>
-      </div>
-    </div>
-    <div *ngIf="selectedProject">
+
+    <div *ngIf="selectedProject" class="project-details-container">
       <h2>{{ selectedProject.nom }}</h2>
       <p>{{ selectedProject.description }}</p>
+
       <div class="charts">
         <div class="chart">
           <h4>Budget Total</h4>
-          <p>{{ selectedProject.budget }}</p>
+          <p>{{ selectedProject.budget | currency }}</p>
         </div>
         <div class="chart">
           <h4>Budget Consommé</h4>
+          <!-- Placeholder for consumed budget or related information -->
         </div>
         <div class="chart">
           <h4>Task Completion</h4>
+          <!-- Placeholder for task completion chart or stats -->
         </div>
       </div>
-      <div class="project-details">
-        <h4>Equipes</h4>
+
+      <div class="project-teams">
+        <h4>Équipes</h4>
         <table class="table">
           <thead>
             <tr>
               <th>#</th>
-              <th>Username</th>
+              <th>Nom d'utilisateur</th>
               <th>Email</th>
-              <th>Role</th>
+              <th>Rôle</th>
               <th>Grade</th>
               <th>Worken</th>
               <th>Actions</th>
@@ -60,23 +59,24 @@
               <td>{{ user.role }}</td>
               <td>{{ user.grade }}</td>
               <td>{{ user.worken ? 'Yes' : 'No' }}</td>
-              <td><button (click)="viewDetails(user)">Details</button></td>
+              <td><button (click)="viewDetails(user)">Détails</button></td>
             </tr>
           </tbody>
         </table>
       </div>
+
       <div class="project-tasks">
         <h4>Tasks</h4>
         <table class="table">
           <thead>
             <tr>
               <th>#</th>
-              <th>Title</th>
+              <th>Titre</th>
               <th>Description</th>
-              <th>Status</th>
-              <th>Start Date</th>
-              <th>End Date</th>
-              <th>Priority</th>
+              <th>Statut</th>
+              <th>Date de début</th>
+              <th>Date de fin</th>
+              <th>Priorité</th>
             </tr>
           </thead>
           <tbody>
@@ -91,9 +91,6 @@
             </tr>
           </tbody>
         </table>
-      </div>
-      <div class="progress-stats">
-        <h4>Aperçu des statuts des tâches</h4>
       </div>
     </div>
   </div>

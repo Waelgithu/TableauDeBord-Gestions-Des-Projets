@@ -90,3 +90,7 @@
   );
   clip-path: circle(50%);
 }
+.pie-chart-container {
+  width: 300px; /* Adjust the width as needed */
+  height: 300px; /* Adjust the height as needed */
+}

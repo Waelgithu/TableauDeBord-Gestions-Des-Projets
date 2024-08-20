@@ -20,6 +20,8 @@ import { ListTasksComponent } from './components/tasks/list-tasks/list-tasks.com
 import { TaskDetailsComponent } from './components/tasks/task-details/task-details.component';
 import { EdittaskComponent } from './components/tasks/edittask/edittask.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { PieChartComponent } from './components/pie-chart/pie-chart.component';
+import { StatusTimelineChartComponent } from './components/status-timeline-chart/status-timeline-chart.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     TaskDetailsComponent,
     EdittaskComponent,
     DashboardComponent,
+    PieChartComponent,
+    StatusTimelineChartComponent,
   ],
   imports: [
     BrowserModule,

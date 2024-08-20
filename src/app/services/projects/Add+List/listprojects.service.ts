@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Project, User, Task } from 'src/app/models/project.model';
+import { Project, User, Task, ProjectStatusHistory } from 'src/app/models/project.model';
 
 @Injectable({
   providedIn: 'root'
@@ -39,5 +39,10 @@ export class ListprojectsService {
 
   getTasksByProject(projectId: number): Observable<Task[]> {
     return this.http.get<Task[]>(`${this.apiUrl}/GetTasksByProject/${projectId}`);
+  }
+
+  getStatusHistoryByProject(projectId: number): Observable<ProjectStatusHistory[]> {
+    const url = `${this.apiUrl}/byProject/${projectId}`;
+    return this.http.get<ProjectStatusHistory[]>(url);
   }
 }

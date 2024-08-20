@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Project, User, Task, Status } from 'src/app/models/project.model';
+import { Project, User, Task, Status, ProjectStatusHistory } from 'src/app/models/project.model';
 import { ListprojectsService } from 'src/app/services/projects/Add+List/listprojects.service';
 import { AdminUserListService } from 'src/app/services/users/AdminUserList/admin-user-list.service';
 import { ChartData } from 'chart.js';
-import { ChangeDetectorRef } from '@angular/core';
-//import { ApexChart, ApexDataLabels, ApexNonAxisChartSeries, ApexTitleSubtitle } from 'ng-apexcharts';
-
 
 @Component({
   selector: 'app-dashboard',
@@ -13,24 +10,30 @@ import { ChangeDetectorRef } from '@angular/core';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  pieChartLabels: string[] = ['Utilisé', 'Restant'];
+  pieChartData: ChartData<'pie'> = {
+    labels: this.pieChartLabels,
+    datasets: [{
+      data: [3, 2], // Placeholder values
+      backgroundColor: ['#FF6384', '#36A2EB']
+    }]
+  };
+
   projects: Project[] = [];
   selectedProject: Project | null = null;
   selectedProjectUsers: User[] = [];
   selectedProjectTasks: Task[] = [];
+  selectedProjectStatusHistory: ProjectStatusHistory[] = [];
   totalBudget: number = 0;
   statusCounts: { [key in Status]?: number } = {};
-  statusData: ChartData<'pie', number[], string | string[]> = {
+  statusTimelineChartData: ChartData<'line'> = {
     labels: [],
-    datasets: [{
-      data: [],
-      backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'],
-    }]
+    datasets: []
   };
 
   constructor(
     private projectsService: ListprojectsService,
-    private userService: AdminUserListService,
-    private cdr: ChangeDetectorRef
+    private userService: AdminUserListService
   ) {}
 
   ngOnInit(): void {
@@ -54,17 +57,13 @@ export class DashboardComponent implements OnInit {
       counts[project.status] = (counts[project.status] || 0) + 1;
       return counts;
     }, {} as { [key in Status]?: number });
-
-    this.statusData.labels = Object.keys(this.statusCounts);
-    this.statusData.datasets[0].data = Object.values(this.statusCounts);
-
-    this.cdr.detectChanges(); // Ensure Angular detects changes
   }
 
   selectProject(project: Project): void {
     this.selectedProject = project;
     this.loadProjectUsers(project.id);
     this.loadProjectTasks(project.id);
+    this.loadProjectStatusHistory(project.id);
   }
 
   loadProjectUsers(projectId: number): void {
@@ -79,8 +78,59 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  loadProjectStatusHistory(projectId: number): void {
+    this.projectsService.getStatusHistoryByProject(projectId).subscribe((data: ProjectStatusHistory[]) => {
+      this.selectedProjectStatusHistory = data;
+      this.prepareStatusTimelineData(); // Update the chart when status history changes
+    });
+  }
+
+  prepareStatusTimelineData(): void {
+    const statusData: { [date: string]: { [status: string]: number } } = {};
+
+    this.selectedProjectStatusHistory.forEach(entry => {
+      const date = new Date(entry.changeDate).toLocaleDateString();
+      if (!statusData[date]) {
+        statusData[date] = {};
+      }
+      statusData[date][entry.newStatus] = (statusData[date][entry.newStatus] || 0) + 1;
+    });
+
+    const labels = Object.keys(statusData).sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
+    const datasets = Object.keys(Status).map(status => ({
+      label: Status[status as keyof typeof Status], // Convert enum to label
+      data: labels.map(date => statusData[date][status] || 0),
+      borderColor: this.getStatusColor(status as Status),
+      backgroundColor: this.getStatusColor(status as Status) + '33', // Adding transparency to color
+      fill: false
+    }));
+
+    this.statusTimelineChartData = {
+      labels,
+      datasets
+    };
+  }
+
+  getStatusColor(status: Status): string {
+    switch (status) {
+      case Status.EN_COURS:
+        return '#FF6384';
+      case Status.ANNULE_ET_CLOTURE:
+        return '#36A2EB';
+      case Status.LIVRE_ET_CLOTURE:
+        return '#FFCE56';
+      case Status.LIVRE:
+        return '#4BC0C0';
+      case Status.NON_DEMARRE:
+        return '#9966FF';
+      case Status.EN_ATTENTE:
+        return '#FF9F40';
+      default:
+        return '#000000';
+    }
+  }
+
   viewDetails(user: User): void {
     // Implement view details functionality
   }
-  
 }
