@@ -10,13 +10,18 @@ export interface Project {
   nom: string;
   description: string;
   status: Status;
+  santeGenerale: SanteGenerale;
+  respectPlanning: Avancement;
+  respectPerimetre: Avancement;
+  respectBudget: RespectBudget;
   startDate: Date;
   endDate: Date;
   priority: number;
   type: string;
   budget: number;
-  tasks?: Task[];
-  users?: User[];
+  assignedUser: User | null;
+  tasks: Task[];
+  users: User[];
 }
 
 export interface Task {
@@ -76,4 +81,20 @@ export interface ProjectStatusHistory {
   newStatus: string;
   changeDate: Date;
   projectName?: string;
+}
+export enum SanteGenerale {
+  SeDerouleCommePrevu = 'Se_déroule_comme_prévu',
+  ASubitDesChangements = 'A_subit_des_changements',
+  EnDerive = 'En_dérive'
+}
+
+export enum Avancement {
+  Respecte = 'Respecté',
+  EnRetard = 'En_retard',
+  PlusOuMoinsRespecte = 'Plus_ou_moins_respecté'
+}
+
+export enum RespectBudget {
+  Respecte = 'Respecté',
+  EnSurconsommation = 'En_surconsommation'
 }

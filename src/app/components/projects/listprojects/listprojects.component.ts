@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Project, Status } from 'src/app/models/project.model';
+import { Project, Status, SanteGenerale, Avancement, RespectBudget } from 'src/app/models/project.model';
 import { ListprojectsService } from 'src/app/services/projects/Add+List/listprojects.service';
 
 @Component({
@@ -15,11 +15,18 @@ export class ListprojectsComponent implements OnInit {
     nom: '', 
     description: '', 
     status: Status.NON_DEMARRE, 
+    santeGenerale: SanteGenerale.SeDerouleCommePrevu,
+    respectPlanning: Avancement.Respecte,
+    respectPerimetre: Avancement.Respecte,
+    respectBudget: RespectBudget.Respecte,
     startDate: new Date(), 
     endDate: new Date(), 
-    priority: 0,
+    priority: 0, 
     type: '',
-    budget: 0
+    budget: 0,
+    assignedUser: null,
+    tasks: [],
+    users: []
   };
 
   statusOptions: string[] = Object.values(Status);
@@ -43,11 +50,18 @@ export class ListprojectsComponent implements OnInit {
         nom: '', 
         description: '', 
         status: Status.NON_DEMARRE, 
+        santeGenerale: SanteGenerale.SeDerouleCommePrevu,
+        respectPlanning: Avancement.Respecte,
+        respectPerimetre: Avancement.Respecte,
+        respectBudget: RespectBudget.Respecte,
         startDate: new Date(), 
         endDate: new Date(), 
-        priority: 0,
+        priority: 0, 
         type: '',
-        budget: 0
+        budget: 0,
+        assignedUser: null,
+        tasks: [],
+        users: []
       };
       this.loadProjects(); // Reload the project list
     });
